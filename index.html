@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT DCA</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #1a1a2e, #000);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1, h2 {
+            margin: 10px;
+        }
+        h1 {
+            font-size: 3em;
+            color: #00adb5;
+        }
+        h2 {
+            font-size: 1.5em;
+            color: #00ffc5;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            margin: 10px;
+            color: #ffffff;
+            background: #00adb5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #007b9b;
+        }
+        footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <h1>PROJECT DCA</h1>
+    <h2>Dynamic Cognitive Authentication</h2>
+    <p>By Somenath Gorai, Saikat Dutta, Subham Mondal, Akash Kajla<br>Beta Version 1.0</p>
+    <div>
+        <button onclick="location.href='cognitive-signature.html'">
+            Cognitive Signature Mapping
+        </button>
+        <button onclick="location.href='behavior-drift.html'">
+            Behavior Drift Detection
+        </button>
+        <button onclick="location.href='decoy.html'">
+            Decoy Tasks
+        </button>
+    </div>
+    <footer>
+        © 2024 PROJECT DCA | Beta Version 1.0
+    </footer>
+</body>
+</html>

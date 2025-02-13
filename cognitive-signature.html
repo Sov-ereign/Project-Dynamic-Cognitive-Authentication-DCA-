@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT DCA - Cognitive Signature Mapping</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        #task {
+            display: none;
+        }
+        #box {
+            width: 300px;
+            height: 300px;
+            background: red;
+            margin: auto;
+            transition: background 0.3s;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #00adb5;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #009c9a;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #prompt {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <h1>PROJECT DCA</h1>
+    <div id="start">
+        <button onclick="startTask()">Start Reaction Time Test</button>
+    </div>
+    <div id="task">
+        <p id="prompt">Click as soon as the box turns green!</p>
+        <div id="box"></div>
+        <button id="clickButton" onclick="recordReaction()" disabled>Click Me</button>
+    </div>
+    <p id="result"></p>
+    <button id="restartButton" onclick="restartTest()" style="display: none;">Restart Test</button>
+    <button onclick="location.href='index.html'" style="margin-top: 20px;">Back to Main Menu</button>
+
+    <script>
+        let startTime;
+        let currentColorIndex = 0;
+        const colors = ['green', 'blue', 'yellow', 'purple', 'orange'];
+        const prompts = [
+            'Click as soon as the box turns green!',
+            'Now click as soon as the box turns blue!',
+            'Next, click as soon as the box turns yellow!',
+            'Get ready to click when the box turns purple!',
+            'Finally, click as soon as the box turns orange!'
+        ];
+
+        function startTask() {
+            document.getElementById("start").style.display = "none";
+            document.getElementById("task").style.display = "block";
+            currentColorIndex = 0;
+            document.getElementById("result").innerText = "";
+            document.getElementById("restartButton").style.display = "none";
+            changeBoxColor();
+        }
+
+        function changeBoxColor() {
+            if (currentColorIndex < colors.length) {
+                document.getElementById("prompt").innerText = prompts[currentColorIndex];
+                setTimeout(() => {
+                    document.getElementById("box").style.background = colors[currentColorIndex];
+                    document.getElementById("clickButton").disabled = false;
+                    startTime = Date.now();
+                }, Math.random() * 3000 + 1000);
+            } else {
+                document.getElementById("result").innerText = "Test complete!";
+                document.getElementById("clickButton").disabled = true;
+                document.getElementById("restartButton").style.display = "block";
+            }
+        }
+
+        function recordReaction() {
+            const reactionTime = Date.now() - startTime;
+            document.getElementById("result").innerText = `Your reaction time: ${reactionTime} ms`;
+            currentColorIndex++;
+            document.getElementById("clickButton").disabled = true;
+            changeBoxColor();
+        }
+
+        function restartTest() {
+            startTask();
+        }
+    </script>
+</body>
+</html>

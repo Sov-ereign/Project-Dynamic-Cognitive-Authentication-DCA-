@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT DCA - Behavioral Drift Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 50px;
+            background-color: #121212;
+            color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #007BFF;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            font-size: 16px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #2c2c2c;
+            color: #f4f4f4;
+        }
+        blockquote {
+            font-style: italic;
+            margin: 20px 0;
+            padding: 10px;
+            background: #333;
+            border-left: 5px solid #007BFF;
+        }
+        pre {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+            color: #00ff00;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Behavioral Drift Detection</h1>
+        <p>Type the following sentence:</p>
+        <blockquote id="sentenceBlock">"The quick brown fox jumps over the lazy dog."</blockquote>
+        <textarea id="inputField" placeholder="Start typing here..." onkeyup="logTypingData()"></textarea>
+        <div id="status"></div>
+        <button id="restartButton" onclick="restartTyping()">Restart</button>
+        <button onclick="location.href='index.html'" style="margin-top: 20px;">Back to Main Menu</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        const sentences = [
+            "The quick brown fox jumps over the lazy dog.",
+            "A journey of a thousand miles begins with a single step.",
+            "To be or not to be, that is the question.",
+            "All that glitters is not gold.",
+            "The only thing we have to fear is fear itself."
+        ];
+
+        let typingData = [];
+        let lastKeyTime = null;
+        let currentSentenceIndex = 0;
+
+        function logTypingData() {
+            const field = document.getElementById("inputField");
+            const currentTime = new Date().getTime();
+
+            if (lastKeyTime) {
+                const timeDiff = currentTime - lastKeyTime;
+                typingData.push({ char: field.value.slice(-1), timeDiff });
+            }
+            lastKeyTime = currentTime;
+
+            document.getElementById("output").innerText = JSON.stringify(typingData, null, 2);
+
+            if (field.value === sentences[currentSentenceIndex]) {
+                document.getElementById("status").innerText = "Sentence completed!";
+                currentSentenceIndex++;
+                if (currentSentenceIndex < sentences.length) {
+                    setTimeout(() => {
+                        document.getElementById("sentenceBlock").innerText = sentences[currentSentenceIndex];
+                        field.value = "";
+                        typingData = [];
+                        document.getElementById("output").innerText = "";
+                        document.getElementById("status").innerText = "";
+                        lastKeyTime = null;
+                    }, 2000);
+                } else {
+                    document.getElementById("status").innerText = "All sentences completed!";
+                }
+            }
+        }
+
+        function restartTyping() {
+            currentSentenceIndex = 0;
+            document.getElementById("sentenceBlock").innerText = sentences[currentSentenceIndex];
+            document.getElementById("inputField").value = "";
+            typingData = [];
+            document.getElementById("output").innerText = "";
+            document.getElementById("status").innerText = "";
+            lastKeyTime = null;
+        }
+    </script>
+</body>
+</html>
